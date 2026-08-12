@@ -15,3 +15,6 @@ class Blog(models.Model):
     posted = models.DateField(db_index=True, auto_now_add=True)
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
     enabled = models.BooleanField(default=False)
+
+    def __str__(self):
+        return self.title
