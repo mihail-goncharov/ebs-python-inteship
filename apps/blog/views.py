@@ -14,13 +14,33 @@ class CategoryViewSet(viewsets.ModelViewSet):
     queryset = Category.objects.all()
 
 
-class BlogListView(GenericAPIView):
+class BlogListCreateView(GenericAPIView):
     serializer_class = BlogSerializer
     permission_classes = (ReadOnly,)
 
     def get(self, request: Request) -> Response:
         blogs = Blog.objects.all()
         return Response(self.get_serializer(blogs, many=True).data)
+
+    def post(self, request: Request) -> Response:
+        # Validate data
+        serializer = self.serializer_class(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        validated_data = serializer.validated_data
+
+        # Create blog
+        blog = Blog.objects.create(**validated_data)
+        return Response(self.serializer_class(blog).data)
+
+    def get_permissions(self):
+        if self.request.method == "GET":
+            return [ReadOnly()]
+
+        elif self.request.method == "POST":
+            return [IsAuthenticated()]
+
+        else:
+            return [permission() for permission in self.permission_classes]
 
 
 class BlogItemView(GenericAPIView):
