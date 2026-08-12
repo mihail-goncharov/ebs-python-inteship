@@ -31,7 +31,7 @@ class BlogListCreateView(GenericAPIView):
 
         # Create blog
         blog = Blog.objects.create(**validated_data)
-        return Response(self.serializer_class(blog).data)
+        return Response(self.serializer_class(blog).data, status=HTTP_201_CREATED)
 
     def get_permissions(self):
         if self.request.method == "GET":
