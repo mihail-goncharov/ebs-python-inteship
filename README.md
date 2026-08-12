@@ -1,3 +1,14 @@
+## Milestone 1 — completed
+
+Implemented:
+- `enabled` field on Blog model
+- Blog admin list showing title and enabled status
+- `POST /blog` — create a blog post
+- `Comments` model (text + blog FK), registered in admin
+- `POST /comment` — create a comment
+- `GET /blog/{id}` — returns blog object with its comments
+
+
 # Django Rest Framework - Internship tasks
 
 This repository contains a base project for internship program at EBS Integrator, each candidate for position of Junior
